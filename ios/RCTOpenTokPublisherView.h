@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *sessionId;
 @property (nonatomic, strong) NSString *token;
+@property (nonatomic) BOOL publishAudio;
+@property (nonatomic) BOOL publishVideo;
 
 @property (nonatomic, copy) RCTDirectEventBlock onPublishError;
 @property (nonatomic, copy) RCTDirectEventBlock onPublishStop;

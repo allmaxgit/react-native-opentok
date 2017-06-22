@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { requireNativeComponent, View } from 'react-native';
+import { requireNativeComponent, View, NativeModules } from 'react-native';
 import React from 'react';
 import SessionViewProps from './SessionViewProps';
 import withLoadingSpinner from './withLoadingSpinner';
@@ -65,9 +65,16 @@ class PublisherView extends React.Component {
      * ```
      */
     onClientDisconnected: React.PropTypes.func,
+    /**
+     * OpenTok Audio and Video publishing
+    */
+    publishAudio: React.PropTypes.bool.isRequired,
+    publishVideo: React.PropTypes.bool.isRequired
   };
 
   static defaultProps = {
+    publishAudio: true,
+    publishVideo: true,
     onPublishStart: noop,
     onPublishError: noop,
     onPublishStop: noop,

@@ -57,6 +57,13 @@
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
 
+    if (!_publishAudio) {
+        _publisher.publishAudio = NO;
+    }
+    if (!_publishVideo) {
+        _publisher.publishVideo = NO;
+    }
+
     OTError *error = nil;
 
     [_session publish:_publisher error:&error];
@@ -74,8 +81,19 @@
  */
 - (void)attachPublisherView {
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-    [self addSubview:_publisher.view];
+    [self addSubview:_publisher.view];    
 }
+
+// Setters
+- (void)setPublishVideo:(BOOL)publishVideo {
+    if (publishVideo != _publishVideo) {
+        _publishVideo = publishVideo;
+        NSLog(@"Native Ad set placementID: %d", publishVideo);
+        _publisher.publishVideo = _publishVideo;
+
+    }
+}
+
 
 /**
  * Cleans up publisher
