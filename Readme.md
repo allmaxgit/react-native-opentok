@@ -10,8 +10,9 @@ Prop | Type
 apiKey | string
 sessionId | string
 token | string
+cameraPosition | string 'front' or 'back' (only for publisher)
 ------------ | -------------
-spinnerContainerStyle | object || number
+spinnerContainerStyle | object or number
 ------------ | -------------
 onPublishStart | function
 onPublishError | function
