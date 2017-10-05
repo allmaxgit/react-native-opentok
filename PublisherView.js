@@ -27,6 +27,8 @@ class PublisherView extends React.Component {
   static propTypes = {
     ...View.propTypes,
     ...SessionViewProps,
+
+    cameraPosition: React.PropTypes.string,
     /**
      * This function is called on publish start
      */
@@ -67,7 +69,7 @@ class PublisherView extends React.Component {
     onClientDisconnected: React.PropTypes.func,
     /**
      * OpenTok Audio and Video publishing
-    */
+     */
     publishAudio: React.PropTypes.bool.isRequired,
     publishVideo: React.PropTypes.bool.isRequired
   };
@@ -75,6 +77,7 @@ class PublisherView extends React.Component {
   static defaultProps = {
     publishAudio: true,
     publishVideo: true,
+    cameraPosition: 'front',
     onPublishStart: noop,
     onPublishError: noop,
     onPublishStop: noop,

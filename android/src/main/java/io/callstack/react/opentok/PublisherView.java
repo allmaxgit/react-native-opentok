@@ -19,12 +19,14 @@ public class PublisherView extends SessionView implements PublisherKit.Publisher
 
     /** {Publisher} active instance of a publisher **/
     private Publisher mPublisher;
+    private String mCameraName;
 
     public PublisherView(ThemedReactContext reactContext) {
         super(reactContext);
     }
 
     private void startPublishing() {
+        mCameraName = "front";
         mPublisher = new Publisher(getContext());
         mPublisher.setPublisherListener(this);
 
@@ -40,6 +42,13 @@ public class PublisherView extends SessionView implements PublisherKit.Publisher
     private void cleanUpPublisher() {
         removeView(mPublisher.getView());
         mPublisher = null;
+    }
+
+    public void setCameraPosition(String key) {
+      if (mPublisher != null && !(mCameraName.equals(key))) {
+        mPublisher.cycleCamera();
+      }
+      mCameraName = key;
     }
 
     @Override

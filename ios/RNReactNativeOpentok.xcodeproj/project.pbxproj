@@ -224,6 +224,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../../ios",
+					"${SRCROOT}/../../../ios/Pods/OpenTok",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -245,6 +246,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../../ios",
+					"${SRCROOT}/../../../ios/Pods/OpenTok",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

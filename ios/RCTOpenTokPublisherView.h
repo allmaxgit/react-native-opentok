@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *token;
 @property (nonatomic) BOOL publishAudio;
 @property (nonatomic) BOOL publishVideo;
+@property (nonatomic, strong) NSString *cameraPosition;
 
 @property (nonatomic, copy) RCTDirectEventBlock onPublishError;
 @property (nonatomic, copy) RCTDirectEventBlock onPublishStop;

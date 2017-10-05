@@ -84,4 +84,19 @@ abstract public class SessionView extends FrameLayout implements Session.Session
     protected void onError(OpentokError opentokError) {
         sendEvent(Events.EVENT_ON_MESSAGE_RECIEVED, Arguments.createMap());
     }
+
+    @Override
+    public void requestLayout() {
+        super.requestLayout();
+        post(new Runnable() {
+            @Override
+            public void run() {
+                measure(
+                  MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
+                  MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY)
+                );
+                layout(getLeft(), getTop(), getRight(), getBottom());
+            }
+        });
+    }
 }

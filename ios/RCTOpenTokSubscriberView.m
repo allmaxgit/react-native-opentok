@@ -37,10 +37,10 @@
 - (void)mount {
     [self cleanupSubscriber];
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
-
+    
     OTError *error = nil;
     [_session connectWithToken:_token error:&error];
-
+    
     if (error) {
         _onSubscribeError(RCTJSErrorFromNSError(error));
     }
@@ -53,15 +53,15 @@
 - (void)doSubscribe:(OTStream*)stream {
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
     OTError *error = nil;
-
+    
     [_session subscribe:_subscriber error:&error];
-
+    
     if (error)
     {
-      _onSubscribeError(RCTJSErrorFromNSError(error));
-      return;
+        _onSubscribeError(RCTJSErrorFromNSError(error));
+        return;
     }
-
+    
     [self attachSubscriberView];
 }
 

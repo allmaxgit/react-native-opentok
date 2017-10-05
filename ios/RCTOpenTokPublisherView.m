@@ -38,10 +38,10 @@
  */
 - (void)mount {
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
-
+    
     OTError *error = nil;
     [_session connectWithToken:_token error:&error];
-
+    
     if (error) {
         _onPublishError(RCTJSErrorFromNSError(error));
     }
@@ -56,23 +56,23 @@
  */
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
-
+    
     if (!_publishAudio) {
         _publisher.publishAudio = NO;
     }
     if (!_publishVideo) {
         _publisher.publishVideo = NO;
     }
-
+    
     OTError *error = nil;
-
+    
     [_session publish:_publisher error:&error];
-
+    
     if (error) {
         _onPublishError(RCTJSErrorFromNSError(error));
         return;
     }
-
+    
     [self attachPublisherView];
 }
 
@@ -81,7 +81,7 @@
  */
 - (void)attachPublisherView {
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-    [self addSubview:_publisher.view];    
+    [self addSubview:_publisher.view];
 }
 
 // Setters
@@ -90,7 +90,20 @@
         _publishVideo = publishVideo;
         NSLog(@"Native Ad set placementID: %d", publishVideo);
         _publisher.publishVideo = _publishVideo;
+        
+    }
+}
 
+- (void)setCameraPosition:(NSString *)cameraPosition {
+    if (![cameraPosition isEqualToString:_cameraPosition]) {
+        _cameraPosition = cameraPosition;
+        if ([_cameraPosition isEqualToString:@"back"]) {
+            [_publisher setCameraPosition:AVCaptureDevicePositionBack];
+        } else if ([_cameraPosition isEqualToString:@"front"]) {
+            [_publisher setCameraPosition:AVCaptureDevicePositionFront];
+        } else {
+            [_publisher setCameraPosition:AVCaptureDevicePositionUnspecified];
+        }
     }
 }
 
@@ -125,16 +138,16 @@
  * Called when another client connects to the session
  */
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
-  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-  [dateFormatter setDateFormat:@"EEE MMM dd HH:mm:ss ZZZ yyyy"];
-
-  [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-  NSString *creationTimeString = [dateFormatter stringFromDate:connection.creationTime];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEE MMM dd HH:mm:ss ZZZ yyyy"];
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *creationTimeString = [dateFormatter stringFromDate:connection.creationTime];
     _onClientConnected(@{
-        @"connectionId": connection.connectionId,
-        @"creationTime": creationTimeString,
-        // @"data": connection.data,
-    });
+                         @"connectionId": connection.connectionId,
+                         @"creationTime": creationTimeString,
+                         // @"data": connection.data,
+                         });
 }
 
 /**
@@ -142,8 +155,8 @@
  */
 - (void)session:(OTSession *)session connectionDestroyed:(OTConnection *)connection {
     _onClientDisconnected(@{
-        @"connectionId": connection.connectionId,
-    });
+                            @"connectionId": connection.connectionId,
+                            });
 }
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {

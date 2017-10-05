@@ -20,28 +20,28 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(connect:(NSString *)apiKey sessionId:(NSString *)sessionId token:(NSString *)token)
 {
-  _session = [[OTSession alloc] initWithApiKey:apiKey sessionId:sessionId delegate:self];
-
-  OTError *error = nil;
-  [_session connectWithToken:token error:&error];
-
-  if (error) {
-    NSLog(@"connect failed with error: (%@)", error);
-  } else {
-    NSLog(@"session created");
-  }
+    _session = [[OTSession alloc] initWithApiKey:apiKey sessionId:sessionId delegate:self];
+    
+    OTError *error = nil;
+    [_session connectWithToken:token error:&error];
+    
+    if (error) {
+        NSLog(@"connect failed with error: (%@)", error);
+    } else {
+        NSLog(@"session created");
+    }
 }
 
 RCT_EXPORT_METHOD(sendMessage:(NSString *)message)
 {
-  NSLog(@"signal error %@", message);
-  OTError* error = nil;
-  [_session signalWithType:@"message" string:message connection:nil error:&error];
-  if (error) {
-      NSLog(@"signal error %@", error);
-  } else {
-      NSLog(@"signal sent");
-  }
+    NSLog(@"signal error %@", message);
+    OTError* error = nil;
+    [_session signalWithType:@"message" string:message connection:nil error:&error];
+    if (error) {
+        NSLog(@"signal error %@", error);
+    } else {
+        NSLog(@"signal sent");
+    }
 }
 
 # pragma mark - OTSession delegate callbacks
@@ -59,11 +59,11 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message)
 
 - (void)onMessageRecieved:(NSString *)message data:(NSString *)data
 {
-  [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageRecieved"
-    body:@{
-      @"message": message,
-      // @"data": data,
-    }];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageRecieved"
+                                                 body:@{
+                                                        @"message": message,
+                                                        // @"data": data,
+                                                        }];
 }
 
 @end
